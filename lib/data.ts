@@ -19,11 +19,13 @@ export const profile = {
 export const experience: {
   company: string;
   role: string;
+  period: string;
+  type: string;
   duration: string;
   description: string;
+  points: string[];
   technologies: string[];
 }[] = [];
-
 export const skills = [
   {
     group: "Programming Languages",
