@@ -9,11 +9,20 @@ export const profile = {
   location: "Warangal, Telangana, India",
   linkedin: "https://linkedin.com/in/ajith-kumar-rayeeshetti",
   github: "https://github.com/ajithkumarrayeeshetti",
-  // Paste your Google Drive resume link here (or set NEXT_PUBLIC_RESUME_URL on Vercel).
-  // Buttons stay hidden while this is empty.
   resume: process.env.NEXT_PUBLIC_RESUME_URL || "",
-  education: "B.Tech Computer Science (Artificial Intelligence), Parul University, Vadodara, Gujarat. Expected graduation 2027.",
+  education:
+    "B.Tech Computer Science (Artificial Intelligence), Parul University, Vadodara, Gujarat. Expected graduation 2027.",
 };
+
+// No professional employment experience has been provided.
+// Keep this empty rather than adding unverified experience.
+export const experience: {
+  company: string;
+  role: string;
+  duration: string;
+  description: string;
+  technologies: string[];
+}[] = [];
 
 export const skills = [
   {
@@ -22,7 +31,17 @@ export const skills = [
   },
   {
     group: "Backend & APIs",
-    items: ["Spring Boot 3", "Spring Security", "Node.js", "Express.js", "REST API Design", "JWT Authentication", "RBAC", "WebSockets", "Socket.IO"],
+    items: [
+      "Spring Boot 3",
+      "Spring Security",
+      "Node.js",
+      "Express.js",
+      "REST API Design",
+      "JWT Authentication",
+      "RBAC",
+      "WebSockets",
+      "Socket.IO",
+    ],
   },
   {
     group: "Frontend",
@@ -30,11 +49,26 @@ export const skills = [
   },
   {
     group: "Databases",
-    items: ["MySQL", "MongoDB", "Mongoose ODM", "Firebase Realtime Database", "Schema Design & Normalization", "Flyway Migrations"],
+    items: [
+      "MySQL",
+      "MongoDB",
+      "Mongoose ODM",
+      "Firebase Realtime Database",
+      "Schema Design & Normalization",
+      "Flyway Migrations",
+    ],
   },
   {
     group: "Tools & DevOps",
-    items: ["Git", "GitHub", "Docker", "Docker Compose", "Postman", "IntelliJ IDEA", "VS Code"],
+    items: [
+      "Git",
+      "GitHub",
+      "Docker",
+      "Docker Compose",
+      "Postman",
+      "IntelliJ IDEA",
+      "VS Code",
+    ],
   },
   {
     group: "AI Integration",
@@ -42,14 +76,22 @@ export const skills = [
   },
   {
     group: "CS Fundamentals",
-    items: ["Data Structures & Algorithms", "Object-Oriented Programming", "DBMS", "Operating Systems", "Computer Networks", "System Design"],
+    items: [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "DBMS",
+      "Operating Systems",
+      "Computer Networks",
+      "System Design",
+    ],
   },
 ];
 
 export const projects = [
   {
     title: "College Portal System: Academic ERP",
-    blurb: "Role-based academic ERP web application for students, faculty, heads of department and administrators, featuring attendance validation, real-time dashboard updates, and grade calculation.",
+    blurb:
+      "Role-based academic ERP web application for students, faculty, heads of department and administrators, featuring attendance validation, real-time dashboard updates, and grade calculation.",
     points: [
       "Built a Spring Boot REST API backend and React.js frontend for four roles: student, faculty, head of department, and admin",
       "Attendance validation using QR codes and GPS to verify student location against classroom coordinates and help prevent proxy attendance",
@@ -57,7 +99,17 @@ export const projects = [
       "Used WebSockets to update dashboards in real time",
       "Added a grade and GPA calculation module",
     ],
-    tags: ["Java", "Spring Boot", "React.js", "MySQL", "JWT", "REST APIs", "WebSockets", "QR Code API", "GPS Validation"],
+    tags: [
+      "Java",
+      "Spring Boot",
+      "React.js",
+      "MySQL",
+      "JWT",
+      "REST APIs",
+      "WebSockets",
+      "QR Code API",
+      "GPS Validation",
+    ],
     link: "https://github.com/ajithkumarrayeeshetti/college-portal",
     shots: [
       { src: "/portal-student.jpg", caption: "Student dashboard" },
@@ -68,7 +120,8 @@ export const projects = [
   },
   {
     title: "AI Job Outreach Platform",
-    blurb: "Automated cold email and tracking system that parses resumes and job listings, generates personalized outreach emails using a locally hosted LLM, and tracks replies and follow-ups.",
+    blurb:
+      "Automated cold email and tracking system that parses resumes and job listings, generates personalized outreach emails using a locally hosted LLM, and tracks replies and follow-ups.",
     points: [
       "Built a multi-tier application with a Spring Boot 3 backend and Next.js 15 frontend using TypeScript",
       "Created an 8-table normalized MySQL schema containing users, jobs, emails, applications, follow-ups, replies, settings, and resumes with Flyway migrations",
@@ -77,7 +130,18 @@ export const projects = [
       "Containerized the backend, database, and LLM service using Docker Compose",
       "Tested API endpoints using Postman",
     ],
-    tags: ["Java", "Spring Boot 3", "Next.js 15", "TypeScript", "MySQL", "Flyway", "Ollama", "Docker Compose", "JWT", "AES-256"],
+    tags: [
+      "Java",
+      "Spring Boot 3",
+      "Next.js 15",
+      "TypeScript",
+      "MySQL",
+      "Flyway",
+      "Ollama",
+      "Docker Compose",
+      "JWT",
+      "AES-256",
+    ],
     link: "https://github.com/ajithkumarrayeeshetti/AI-Job-Outreach-Platform",
     shots: [
       { src: "/outreach-dashboard.jpg", caption: "Dashboard" },
@@ -87,7 +151,8 @@ export const projects = [
   },
   {
     title: "KisanMithra: Agricultural Marketplace",
-    blurb: "Full-stack agricultural marketplace connecting farmers directly with consumers through product listings, role-based dashboards, real-time communication, and AI-powered features.",
+    blurb:
+      "Full-stack agricultural marketplace connecting farmers directly with consumers through product listings, role-based dashboards, real-time communication, and AI-powered features.",
     points: [
       "Built an Express.js and MongoDB REST API for an agricultural marketplace connecting farmers with consumers",
       "Developed role-based dashboards for farmers, consumers, and administrators",
@@ -96,7 +161,16 @@ export const projects = [
       "Indexed frequently queried MongoDB fields to reduce lookup time",
       "Integrated AI-powered price prediction, review sentiment scoring, and suggested chat replies as separate services",
     ],
-    tags: ["React.js", "Express.js", "MongoDB", "Mongoose ODM", "JWT", "RBAC", "Socket.IO", "REST APIs"],
+    tags: [
+      "React.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose ODM",
+      "JWT",
+      "RBAC",
+      "Socket.IO",
+      "REST APIs",
+    ],
     link: "https://github.com/Munishwarreddy/kisanmithra-farmer",
     shots: [],
   },
@@ -120,16 +194,54 @@ export const certifications = [
   },
 ];
 
-export const systemPrompt = `You answer visitors' questions on ${profile.name}'s portfolio website in 1 to 4 plain sentences, with no em dashes and no hype, using ONLY the facts below. If something is not covered, say you don't know and suggest contacting him by email. Never invent experience, employers, or skills. Do not claim design-tool (Figma etc.) experience.
+export const systemPrompt = `
+You answer visitors' questions on ${profile.name}'s portfolio website in 1 to 4 plain sentences, with no em dashes and no hype, using ONLY the facts below.
 
-Profile: ${profile.title}. ${profile.bio}
+If something is not covered, say you don't know and suggest contacting him by email.
 
-Education: ${profile.education}
+Never invent experience, employers, achievements, or skills. Do not claim design-tool (Figma etc.) experience.
 
-Skills: ${skills.map((s) => `${s.group}: ${s.items.join(", ")}`).join(" | ")}
+Profile:
+${profile.name}
+${profile.title}
+${profile.stack}
+${profile.bio}
 
-Projects: ${projects.map((p) => `${p.title} - ${p.blurb} Highlights: ${p.points.join("; ")}. Tech: ${p.tags.join(", ")}. Code: ${p.link}`).join(" || ")}
+Education:
+${profile.education}
 
-Certifications: ${certifications.map((c) => `${c.name} - ${c.issuer}, ${c.year}`).join(" | ")}
+Skills:
+${skills.map((s) => `${s.group}: ${s.items.join(", ")}`).join(" | ")}
 
-Contact: email ${profile.email}, phone ${profile.phone}, location ${profile.location}, LinkedIn ${profile.linkedin}, GitHub ${profile.github}.`;
+Experience:
+${
+  experience.length
+    ? experience
+        .map(
+          (e) =>
+            `${e.role} at ${e.company}, ${e.duration}. ${e.description}. Technologies: ${e.technologies.join(", ")}`
+        )
+        .join(" | ")
+    : "No professional employment experience has been provided."
+}
+
+Projects:
+${projects
+  .map(
+    (p) =>
+      `${p.title} - ${p.blurb} Highlights: ${p.points.join("; ")}. Tech: ${p.tags.join(", ")}. Code: ${p.link}`
+  )
+  .join(" || ")}
+
+Certifications:
+${certifications
+  .map((c) => `${c.name} - ${c.issuer}, ${c.year}`)
+  .join(" | ")}
+
+Contact:
+Email: ${profile.email}
+Phone: ${profile.phone}
+Location: ${profile.location}
+LinkedIn: ${profile.linkedin}
+GitHub: ${profile.github}
+`;
