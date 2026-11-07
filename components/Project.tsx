@@ -1,6 +1,7 @@
 
 "use client";
 import { useEffect, useState } from "react";
+import DepthCard from "@/components/ui/depth-card";
 
 type Shot = { src: string; caption: string };
 
@@ -35,58 +36,64 @@ export default function Project({ p, index }: Props) {
   }, [open]);
 
   return (
-    <article className={`project${index % 2 ? " flip" : ""}`}>
-      <div className="info">
-        <h3>{p.title}</h3>
-        <p>{p.blurb}</p>
+    <>
+      <DepthCard
+        className={`project${index % 2 ? " flip" : ""}`}
+        label={p.title}
+        delay={index * 0.06}
+      >
+        <div className="info">
+          <h3>{p.title}</h3>
+          <p>{p.blurb}</p>
 
-        <ul>
-          {p.points.map((x) => (
-            <li key={x}>{x}</li>
-          ))}
-        </ul>
-
-        <p className="stack mono">{p.tags.join(" / ")}</p>
-
-        <p>
-          <a href={p.link} target="_blank" rel="noreferrer">
-            Source code on GitHub
-          </a>
-        </p>
-      </div>
-
-      {hasShots && shot && (
-        <div className="shots">
-          <button
-            className="shot"
-            onClick={() => setOpen(true)}
-            aria-label={`Enlarge screenshot: ${shot.caption}`}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={shot.src}
-              alt={`${p.title}, ${shot.caption}`}
-              loading="lazy"
-            />
-          </button>
-
-          <div
-            className="tabs mono"
-            role="group"
-            aria-label="Choose a screenshot"
-          >
-            {p.shots.map((s, k) => (
-              <button
-                key={s.src}
-                aria-pressed={k === current}
-                onClick={() => setCurrent(k)}
-              >
-                {s.caption}
-              </button>
+          <ul>
+            {p.points.map((x) => (
+              <li key={x}>{x}</li>
             ))}
-          </div>
+          </ul>
+
+          <p className="stack mono">{p.tags.join(" / ")}</p>
+
+          <p>
+            <a href={p.link} target="_blank" rel="noreferrer">
+              Source code on GitHub
+            </a>
+          </p>
         </div>
-      )}
+
+        {hasShots && shot && (
+          <div className="shots">
+            <button
+              className="shot"
+              onClick={() => setOpen(true)}
+              aria-label={`Enlarge screenshot: ${shot.caption}`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={shot.src}
+                alt={`${p.title}, ${shot.caption}`}
+                loading="lazy"
+              />
+            </button>
+
+            <div
+              className="tabs mono"
+              role="group"
+              aria-label="Choose a screenshot"
+            >
+              {p.shots.map((s, k) => (
+                <button
+                  key={s.src}
+                  aria-pressed={k === current}
+                  onClick={() => setCurrent(k)}
+                >
+                  {s.caption}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </DepthCard>
 
       {open && shot && (
         <div
@@ -104,6 +111,6 @@ export default function Project({ p, index }: Props) {
           </p>
         </div>
       )}
-    </article>
+    </>
   );
 }

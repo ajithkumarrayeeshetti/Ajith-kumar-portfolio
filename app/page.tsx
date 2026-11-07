@@ -7,7 +7,8 @@ import PerspectiveTunnelHero from "@/components/ui/perspective-tunnel-hero";
 import Experience from "@/components/Experience";
 import Project from "@/components/Project";
 import Questions from "@/components/Questions";
-import { profile, skills, projects } from "@/lib/data";
+import DepthCard from "@/components/ui/depth-card";
+import { certifications, profile, skills, projects } from "@/lib/data";
 
 const Scene = dynamic(() => import("@/components/Scene"), { ssr: false });
 
@@ -33,7 +34,9 @@ export default function Home() {
           <a href="#work">Work</a>
           <a href="#about">About</a>
           <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
           <a href="#skills">Skills</a>
+          <a href="#certifications">Certifications</a>
           <button
             className="nav-chat-button"
             type="button"
@@ -60,11 +63,10 @@ export default function Home() {
 
         <section id="about" className="block"><div className="wrap">
           <Head title="About" obj="donut" />
-          <div className="prose">
+          <DepthCard className="prose depth-panel" label="About Ajith">
             <p>{profile.bio}</p>
             <p>I work in code rather than in design tools, so I judge a screen by building it and using it as a first-time visitor would.</p>
-            <p className="muted">{profile.education}</p>
-          </div>
+          </DepthCard>
         </div></section>
 
         <section id="experience" className="block"><div className="wrap">
@@ -72,16 +74,46 @@ export default function Home() {
           <Experience />
         </div></section>
 
+        <section id="education" className="block"><div className="wrap">
+          <Head title="Education" obj="education" />
+          <DepthCard className="education-card" label="Education">
+            <p className="education-kicker mono">Academic background</p>
+            <p>{profile.education}</p>
+          </DepthCard>
+        </div></section>
+
         <section id="skills" className="block"><div className="wrap">
           <Head title="Skills" obj="lattice" />
           <dl className="skills">
-            {skills.map((s) => (<div key={s.group}><dt>{s.group}</dt><dd>{s.items.join(", ")}</dd></div>))}
+            {skills.map((s, i) => (
+              <DepthCard className="skill-depth" key={s.group} delay={i * 0.035}>
+                <dt>{s.group}</dt>
+                <dd>{s.items.join(", ")}</dd>
+              </DepthCard>
+            ))}
           </dl>
+        </div></section>
+
+        <section id="certifications" className="block"><div className="wrap">
+          <Head title="Certifications" obj="certifications" />
+          <div className="certification-grid">
+            {certifications.map((cert, i) => (
+              <DepthCard
+                className="certification-card"
+                key={`${cert.name}-${cert.issuer}`}
+                delay={i * 0.05}
+              >
+                <p className="certification-year mono">{cert.year}</p>
+                <h3>{cert.name}</h3>
+                <p className="muted">{cert.issuer}</p>
+              </DepthCard>
+            ))}
+          </div>
         </div></section>
 
         <section id="contact" className="block"><div className="wrap">
           <Head title="Contact" obj="stack-end" />
-          <div>
+          <DepthCard className="contact-panel" label="Contact information">
             <a className="big" href={`mailto:${profile.email}`}>{profile.email}</a>
             <p className="muted">Email is the quickest way to reach me.</p>
             <dl className="contact">
@@ -91,7 +123,7 @@ export default function Home() {
               <div><dt className="mono">GitHub</dt><dd><a href={profile.github} target="_blank" rel="noreferrer">ajithkumarrayeeshetti</a></dd></div>
               {profile.resume && <div><dt className="mono">Resume</dt><dd><a href={profile.resume} target="_blank" rel="noreferrer">Open on Google Drive</a></dd></div>}
             </dl>
-          </div>
+          </DepthCard>
         </div></section>
       </main>
 

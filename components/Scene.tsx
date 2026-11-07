@@ -232,25 +232,44 @@ function Redraw({ active }: { active: boolean }) {
 
 export default function Scene() {
   const [reduce, setReduce] = useState(false);
-  useEffect(() => { setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
-  const small = typeof window !== "undefined" && window.innerWidth < 860;
+  const [small, setSmall] = useState(false);
+  useEffect(() => {
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreferences = () => {
+      setReduce(motionPreference.matches);
+      setSmall(window.innerWidth < 860);
+    };
+
+    updatePreferences();
+    window.addEventListener("resize", updatePreferences);
+    motionPreference.addEventListener("change", updatePreferences);
+
+    return () => {
+      window.removeEventListener("resize", updatePreferences);
+      motionPreference.removeEventListener("change", updatePreferences);
+    };
+  }, []);
+
+  const animate = !reduce && !small;
   return (
     <Canvas
-      frameloop={reduce ? "demand" : "always"}
+      frameloop={animate ? "always" : "demand"}
       camera={{ position: [0, 0, CAM_Z], fov: FOV }}
       dpr={small ? 1 : [1, 1.5]}
       gl={{ alpha: true, antialias: !small }}
     >
-      <Motion.Provider value={!reduce}>
+      <Motion.Provider value={animate}>
         <ambientLight intensity={0.9} />
         <directionalLight position={[4, 6, 5]} intensity={2.2} />
         <directionalLight position={[-5, -2, 3]} intensity={0.8} />
-        <Redraw active={reduce} />
+        <Redraw active={!animate} />
         <Anchor id="stack"><Stack /></Anchor>
         <Anchor id="bars"><Bars /></Anchor>
         <Anchor id="donut"><Donut /></Anchor>
         <Anchor id="lattice"><Lattice /></Anchor>
         <Anchor id="orbit"><Orbit /></Anchor>
+        <Anchor id="education"><Stack /></Anchor>
+        <Anchor id="certifications"><Orbit /></Anchor>
         <Anchor id="stack-end" scale={0.7}><Stack /></Anchor>
       </Motion.Provider>
     </Canvas>

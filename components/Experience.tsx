@@ -1,10 +1,15 @@
 import { experience } from "@/lib/data";
+import DepthCard from "@/components/ui/depth-card";
 
 export default function Experience() {
   return (
     <div className="experience-list">
       {experience.map((item) => (
-        <article className="experience-entry" key={`${item.company}-${item.role}`}>
+        <DepthCard
+          className="experience-entry"
+          key={`${item.company}-${item.role}`}
+          label={`${item.role} at ${item.company}`}
+        >
           <div className="experience-heading">
             <div>
               <p className="experience-period mono">{item.period}</p>
@@ -18,7 +23,7 @@ export default function Experience() {
               <li key={point}>{point}</li>
             ))}
           </ul>
-        </article>
+        </DepthCard>
       ))}
     </div>
   );

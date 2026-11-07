@@ -26,7 +26,7 @@ main,.foot{position:relative;z-index:1}
 .hero-anchor{width:46%}
 .stage{position:relative;min-height:clamp(240px,44vh,420px);display:flex;align-items:flex-end;margin-bottom:32px}
 h1{font:600 clamp(3rem,9vw,6.2rem)/.95 var(--serif);letter-spacing:-.02em}
-.block{padding:0 0 clamp(56px,9vw,100px);border-bottom:1px solid var(--line)}
+.block{position:relative;padding:0 0 clamp(56px,9vw,100px);border-bottom:1px solid var(--line);perspective:1400px;transform-style:preserve-3d}
 .sec-head{margin:0}
 h2{font:600 clamp(1.9rem,4vw,2.9rem)/1.1 var(--serif)}
 .prose{max-width:60ch}
@@ -74,6 +74,21 @@ form label{display:block;margin-bottom:6px;color:var(--mute)}
 .lightbox{position:fixed;inset:0;z-index:50;background:#0b0a09;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;cursor:zoom-out}
 .lightbox img{max-width:96vw;max-height:84vh;border:1px solid var(--fg)}
 .lightbox p{color:var(--fg)}
+.depth-card{transform-style:preserve-3d;backface-visibility:hidden;will-change:transform}
+.depth-panel,.education-card,.contact-panel{max-width:760px;padding:clamp(22px,4vw,36px);border:1px solid var(--rule);border-radius:6px;background:linear-gradient(135deg,rgba(239,233,221,.055),rgba(239,233,221,.015));box-shadow:0 18px 48px rgba(0,0,0,.2),inset 0 1px 0 rgba(239,233,221,.06)}
+.depth-panel{max-width:68ch}
+.education-card{max-width:760px}
+.education-kicker,.certification-year{margin-bottom:10px;color:var(--accent)}
+.certification-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.certification-card{min-height:180px;padding:22px;border:1px solid var(--rule);border-radius:6px;background:linear-gradient(145deg,rgba(239,233,221,.055),rgba(239,233,221,.012));box-shadow:0 18px 42px rgba(0,0,0,.19),inset 0 1px 0 rgba(239,233,221,.06)}
+.certification-card h3{margin:0 0 8px;font:600 1.35rem/1.2 var(--serif)}
+.certification-card .muted{font-size:.92rem}
+.skill-depth{transform-style:preserve-3d}
+.project.depth-card{border:0;border-top:1px solid var(--rule);background:linear-gradient(90deg,rgba(239,233,221,.018),transparent 72%)}
+.project.depth-card:nth-of-type(2){border-top:0;padding-top:0}
+.experience-entry.depth-card{transform-style:preserve-3d}
+.contact-panel{max-width:760px}
+.contact-panel .contact{max-width:100%}
 @media(max-width:860px){
   .project,.project.flip{grid-template-columns:1fr}
   .project.flip .shots{order:0}
@@ -81,7 +96,15 @@ form label{display:block;margin-bottom:6px;color:var(--mute)}
   .anchor{width:62%}
   .hero{align-items:flex-start;padding:40px 0 330px}
   .hero-anchor{top:auto;height:320px;width:100%}
+  .certification-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+@media(max-width:560px){
+  .certification-grid{grid-template-columns:1fr}
+  .certification-card{min-height:0}
+  .nav{align-items:flex-start}
+  .nav nav{gap:8px 14px}
+}
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 .hero{min-height:0;height:100svh;padding:0}
@@ -221,7 +244,11 @@ form label{display:block;margin-bottom:6px;color:var(--mute)}
 }
 
 @media(prefers-reduced-motion:reduce){
+  .depth-card{will-change:auto}
   .profile-hover-card{will-change:auto}
   .chat-launcher{transition:none}
   .chat-panel{animation:none}
 }
+
+.nav nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
+.nav a,.nav-chat-button{margin-left:0}

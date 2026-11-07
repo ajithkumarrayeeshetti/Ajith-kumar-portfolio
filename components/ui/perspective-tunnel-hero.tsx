@@ -218,7 +218,7 @@ export default function PerspectiveTunnelHero() {
     };
   }, [rawProgress]);
 
-  const pointer = useCameraParallax(!reduceMotion);
+  const pointer = useCameraParallax(!reduceMotion && !stage.isMobile);
   const titleScale = useTransform(smoothProgress, [0, 0.5, 1], [1, 1.035, 1]);
   const promptOpacity = useTransform(smoothProgress, [0, 0.12], [1, 0]);
 

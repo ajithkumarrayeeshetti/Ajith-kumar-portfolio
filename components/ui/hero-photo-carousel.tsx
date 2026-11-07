@@ -5,11 +5,18 @@ import {
   motion,
   MotionValue,
   useMotionValue,
+  useMotionValueEvent,
   useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
-import { PointerEvent, ReactNode, TouchEvent, useRef, useState } from "react";
+import {
+  PointerEvent,
+  ReactNode,
+  TouchEvent,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "@/lib/utils";
 
 interface HeroPhotoCarouselProps {
@@ -30,6 +37,8 @@ export default function HeroPhotoCarousel({
   projectProgress,
 }: HeroPhotoCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const imageCount = images.length;
+  const finalImageSelected = useRef(false);
   const cardRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
@@ -40,11 +49,19 @@ export default function HeroPhotoCarousel({
   const rotateY = useSpring(rawRotateY, { stiffness: 180, damping: 22 });
   const opacity = useTransform(
     projectProgress ?? fallbackProgress,
-    [0, 0.2, 0.45],
-    [1, 0.92, 0],
+    [0, 0.2, 0.45, 0.92, 1],
+    [1, 0.92, 0, 0, 1],
   );
-  const imageCount = images.length;
   const rearCardCount = Math.min(MAX_REAR_CARDS, Math.max(0, imageCount - 1));
+
+  useMotionValueEvent(projectProgress ?? fallbackProgress, "change", (progress) => {
+    if (imageCount > 2 && progress >= 0.999 && !finalImageSelected.current) {
+      finalImageSelected.current = true;
+      setActiveIndex(2);
+    } else if (progress < 0.95) {
+      finalImageSelected.current = false;
+    }
+  });
 
   const selectImage = (index: number) => {
     setActiveIndex((index + imageCount) % imageCount);
