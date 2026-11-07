@@ -1,8 +1,10 @@
 
 "use client";
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
-import Portrait from "@/components/Portrait";
+import PerspectiveTunnelHero from "@/components/ui/perspective-tunnel-hero";
+import Experience from "@/components/Experience";
 import Project from "@/components/Project";
 import Questions from "@/components/Questions";
 import { profile, skills, projects } from "@/lib/data";
@@ -19,6 +21,8 @@ function Head({ title, obj }: { title: string; obj: string }) {
 }
 
 export default function Home() {
+  const [chatOpen, setChatOpen] = useState(false);
+
   return (
     <>
       <div className="scene" aria-hidden="true"><Scene /></div>
@@ -30,7 +34,15 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#experience">Experience</a>
           <a href="#skills">Skills</a>
-          <a href="#questions">Questions</a>
+          <button
+            className="nav-chat-button"
+            type="button"
+            onClick={() => setChatOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={chatOpen}
+          >
+            Ask me
+          </button>
           <a href="#contact">Contact</a>
           {profile.resume && <a href={profile.resume} target="_blank" rel="noreferrer">Resume</a>}
         </nav>
@@ -38,20 +50,7 @@ export default function Home() {
 
       <main>
         <section className="hero">
-          <div className="anchor hero-anchor" data-obj="stack" aria-hidden="true" />
-          <div className="wrap">
-            <div className="hero-text">
-              <Portrait name={profile.name} />
-              <h1>{profile.name}</h1>
-              <p className="role">{profile.title}</p>
-              <p className="intro">I built an academic portal with four role-based dashboards and a QR plus GPS attendance check, and an outreach tool that drafts emails with a local model.</p>
-              <p className="meta mono">{profile.location}. Graduating 2027.</p>
-              <p className="links">
-                <a href="#work">See the projects</a>
-                {profile.resume && <a href={profile.resume} target="_blank" rel="noreferrer">Read the resume</a>}
-              </p>
-            </div>
-          </div>
+          <PerspectiveTunnelHero />
         </section>
 
         <section id="work" className="block"><div className="wrap">
@@ -70,7 +69,7 @@ export default function Home() {
 
         <section id="experience" className="block"><div className="wrap">
           <Head title="Experience" obj="stack" />
-          
+          <Experience />
         </div></section>
 
         <section id="skills" className="block"><div className="wrap">
@@ -78,11 +77,6 @@ export default function Home() {
           <dl className="skills">
             {skills.map((s) => (<div key={s.group}><dt>{s.group}</dt><dd>{s.items.join(", ")}</dd></div>))}
           </dl>
-        </div></section>
-
-        <section id="questions" className="block"><div className="wrap">
-          <Head title="Questions" obj="orbit" />
-          <Questions />
         </div></section>
 
         <section id="contact" className="block"><div className="wrap">
@@ -107,6 +101,11 @@ export default function Home() {
           <span>© 2026 Ajith Kumar R.</span>
         </div>
       </footer>
+      <Questions
+        open={chatOpen}
+        onOpen={() => setChatOpen(true)}
+        onClose={() => setChatOpen(false)}
+      />
     </>
   );
 }

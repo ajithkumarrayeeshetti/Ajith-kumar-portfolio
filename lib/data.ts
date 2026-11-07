@@ -14,18 +14,18 @@ export const profile = {
     "B.Tech Computer Science (Artificial Intelligence), Parul University, Vadodara, Gujarat. Expected graduation 2027.",
 };
 
-// No professional employment experience has been provided.
-// Keep this empty rather than adding unverified experience.
-export const experience: {
-  company: string;
-  role: string;
-  period: string;
-  type: string;
-  duration: string;
-  description: string;
-  points: string[];
-  technologies: string[];
-}[] = [];
+export const experience = [
+  {
+    company: "Brotech Websolutions",
+    role: "Founder & CEO",
+    period: "2025 – Present",
+    points: [
+      "Founded a client-facing web development startup and architected custom full-stack web applications for 3+ small business clients, managing complete delivery from system design to production deployment.",
+      "Owned the full Software Development Life Cycle (SDLC), including requirements analysis, database schema design, API development, frontend implementation, QA testing, deployment pipelines, and post-launch maintenance.",
+      "Applied Agile development practices for sprint planning, feature prioritization, and iterative delivery, consistently meeting client deadlines with production-ready software.",
+    ],
+  },
+];
 export const skills = [
   {
     group: "Programming Languages",
@@ -221,7 +221,7 @@ ${
     ? experience
         .map(
           (e) =>
-            `${e.role} at ${e.company}, ${e.duration}. ${e.description}. Technologies: ${e.technologies.join(", ")}`
+            `${e.role} at ${e.company}, ${e.period}. ${e.points.join("; ")}`
         )
         .join(" | ")
     : "No professional employment experience has been provided."

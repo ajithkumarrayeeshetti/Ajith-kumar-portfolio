@@ -1,13 +1,36 @@
 "use client";
-import { useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 type Turn = { q: string; a?: string; failed?: boolean };
 const starters = ["Which projects have you built?", "What is your tech stack?", "Where do you study?", "How do I contact you?"];
 
-export default function Questions() {
+interface QuestionsProps {
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
+export default function Questions({ open, onOpen, onClose }: QuestionsProps) {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    inputRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        launcherRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose]);
 
   async function ask(raw: string) {
     const q = raw.trim();
@@ -36,29 +59,100 @@ export default function Questions() {
     setBusy(false);
   }
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    void ask(text);
+  };
+
   return (
-    <div className="questions">
-      <p className="prose">
-        Ask about my skills, projects or studies. An automated assistant answers from notes I wrote about my work, so confirm anything important by email.
-      </p>
-      <ul className="starters">
-        {starters.map((s) => (<li key={s}><button onClick={() => ask(s)} disabled={busy}>{s}</button></li>))}
-      </ul>
-      <div className="log" aria-live="polite">
-        {turns.map((t, i) => (
-          <div className="turn" key={i}>
-            <p className="q"><span className="mono">Q</span>{t.q}</p>
-            <p className={`a${t.failed ? " err" : ""}`}><span className="mono">A</span>{t.a ?? "Checking my notes"}</p>
+    <div className="chat-widget">
+      {open && (
+        <section
+          id="portfolio-chat-panel"
+          className="chat-panel"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="chat-title"
+        >
+          <header className="chat-header">
+            <div>
+              <p className="chat-eyebrow mono">Portfolio assistant</p>
+              <h2 id="chat-title">Ask me anything</h2>
+            </div>
+            <button
+              className="chat-close"
+              type="button"
+              onClick={onClose}
+              aria-label="Close chat"
+            >
+              ×
+            </button>
+          </header>
+
+          <div className="chat-body">
+            <p className="chat-intro">
+              Ask about my projects, skills, or studies. Answers are based on
+              notes about my work.
+            </p>
+            {turns.length === 0 && (
+              <ul className="chat-starters">
+                {starters.map((starter) => (
+                  <li key={starter}>
+                    <button onClick={() => void ask(starter)} disabled={busy}>
+                      {starter}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="chat-log" aria-live="polite">
+              {turns.map((turn, index) => (
+                <div className="chat-turn" key={`${turn.q}-${index}`}>
+                  <p className="chat-question">{turn.q}</p>
+                  <p className={`chat-answer${turn.failed ? " err" : ""}`}>
+                    {turn.a ?? "Checking my notes"}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      <form onSubmit={(e) => { e.preventDefault(); ask(text); }}>
-        <label htmlFor="question" className="mono">Your question</label>
-        <div className="row">
-          <input id="question" value={text} onChange={(e) => setText(e.target.value)} maxLength={300} required autoComplete="off" />
-          <button type="submit" disabled={busy}>{busy ? "Sending" : "Send question"}</button>
-        </div>
-      </form>
+
+          <form className="chat-form" onSubmit={handleSubmit}>
+            <label htmlFor="portfolio-chat-question" className="mono">
+              Your question
+            </label>
+            <div className="chat-input-row">
+              <input
+                ref={inputRef}
+                id="portfolio-chat-question"
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+                maxLength={300}
+                required
+                autoComplete="off"
+              />
+              <button type="submit" disabled={busy}>
+                {busy ? "Sending" : "Send"}
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
+
+      <button
+        ref={launcherRef}
+        id="portfolio-chat"
+        className={`chat-launcher${open ? " is-open" : ""}`}
+        type="button"
+        onClick={open ? onClose : onOpen}
+        aria-expanded={open}
+        aria-controls="portfolio-chat-panel"
+      >
+        <span className="chat-launcher-icon" aria-hidden="true">
+          {open ? "×" : "?"}
+        </span>
+        <span>{open ? "Close chat" : "Ask me"}</span>
+      </button>
     </div>
   );
 }
